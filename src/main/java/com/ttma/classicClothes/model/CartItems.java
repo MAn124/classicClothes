@@ -11,7 +11,10 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Setter
 @Entity
-public class CartItems extends AbstractEntity<Long> implements Serializable {
+public class CartItems  implements Serializable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     @ManyToOne
     @JoinColumn(name = "cart_id",nullable = false)
     private Cart cart;

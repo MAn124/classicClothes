@@ -14,7 +14,10 @@ import java.util.List;
 @Setter
 @Entity
 @Table(name = "cart")
-public class Cart extends AbstractEntity<Long> implements Serializable {
+public class Cart  implements Serializable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     @OneToOne()
     @JoinColumn(name = "user_id",nullable = false)
     private User user;
