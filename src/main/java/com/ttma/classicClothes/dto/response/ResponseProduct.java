@@ -1,0 +1,18 @@
+package com.ttma.classicClothes.dto.response;
+
+import com.ttma.classicClothes.model.Category;
+import lombok.Builder;
+import lombok.Getter;
+
+import java.math.BigDecimal;
+
+@Getter
+@Builder
+public class ResponseProduct {
+    private String name;
+    private String description;
+    private int quantity;
+    private BigDecimal price;
+    private String image;
+    private Long categoryId;
+}
