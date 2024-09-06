@@ -3,6 +3,7 @@ package com.ttma.classicClothes.model;
 import com.ttma.classicClothes.enums.RoleEnum;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,7 +20,7 @@ import java.util.List;
 @Setter
 @Entity
 @Table(name = "user")
-public class User extends AbstractEntity<Long> implements UserDetails, Serializable{
+public class User extends AbstractEntity<Long> implements UserDetails, Serializable {
 
     private String firstName;
     private String lastName;
@@ -57,4 +58,6 @@ public class User extends AbstractEntity<Long> implements UserDetails, Serializa
     public boolean isEnabled() {
         return true;
     }
+
+
 }

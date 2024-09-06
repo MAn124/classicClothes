@@ -24,12 +24,17 @@ public class CartServiceImpl implements CartService {
     private final CartRepository cartRepository;
     @Override
     public Cart addToCart(Long userId, Long productId, Integer quantity) {
+        //kiem tra nguoi dung
         User user = userRespository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
+        //kiem tra san pham
         Product product = productRepository.findById(productId).orElseThrow(() -> new RuntimeException("Product not found"));
+        //kiem tra soluong san pham
         if(product.getQuantity() < quantity){
             throw new RuntimeException("Not enough available");
         }
+        //kiem tra gio hang
         Cart cart = cartRepository.findByUserId(userId).orElse(new Cart(null, user, new ArrayList<>()));
+        //kiem tra trong gio hang co san pham hay khong
         Optional<CartItems> existItems = cart.getCartItems().stream().filter(cartItems -> cartItems.getProduct().getId().equals(productId)).findFirst();
         if(existItems.isPresent()){
             CartItems cartItems = existItems.get();
@@ -39,5 +44,18 @@ public class CartServiceImpl implements CartService {
             cart.getCartItems().add(cartItems);
         }
         return cartRepository.save(cart);
+    }
+
+    @Override
+    public CartRequest getCart(Long userId) {
+        Cart cart = cartRepository.findByUserId(userId).orElseThrow(() -> new RuntimeException("User not found"));
+        return null;
+    }
+
+    @Override
+    public void removeCart(Long userId) {
+        Cart cart = cartRepository.findByUserId(userId).orElseThrow(() -> new RuntimeException("User not found"));
+        cart.getCartItems().clear();
+        cartRepository.save(cart);
     }
 }

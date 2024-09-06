@@ -39,4 +39,22 @@ public class UserController {
             return new ResponseError(HttpStatus.NO_CONTENT.value(), "Failed");
         }
     }
+    @PutMapping("update/{id}")
+    public ResponseData<?> updateUser(@PathVariable("id") long id,
+                                      @RequestBody UserRequest request){
+        try {
+            return new ResponseData<>(HttpStatus.CREATED.value(), "success",userService.updateUser(id, request));
+        }catch (Exception e){
+            return new ResponseError(HttpStatus.NO_CONTENT.value(), "Failed");
+        }
+    }
+    @DeleteMapping("/{id}")
+    public ResponseData<?> deleteUser(@PathVariable("id") long id){
+        try {
+            userService.deleteUser(id);
+            return new ResponseData<>(HttpStatus.CREATED.value(), "success");
+        }catch (Exception e){
+            return new ResponseError(HttpStatus.NO_CONTENT.value(), "Failed");
+        }
+    }
 }

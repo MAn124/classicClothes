@@ -1,6 +1,7 @@
 package com.ttma.classicClothes.Service.Impl;
 
 import com.ttma.classicClothes.Service.UserService;
+import com.ttma.classicClothes.dto.request.ChangePasswordRequest;
 import com.ttma.classicClothes.dto.request.UserRequest;
 import com.ttma.classicClothes.dto.response.ResponseUser;
 import com.ttma.classicClothes.enums.RoleEnum;
@@ -20,7 +21,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
     private final UserRespository userRespository;
-
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public UserDetailsService userDetailsService() {
@@ -36,7 +37,7 @@ public class UserServiceImpl implements UserService {
                 .firstName(request.getFirstName())
                 .lastName(request.getLastName())
                 .username(request.getUsername())
-                .password(request.getPassword())
+                .password(passwordEncoder.encode(request.getPassword()))
                 .role(RoleEnum.USER)
                 .email(request.getEmail())
                 .build();
@@ -81,13 +82,23 @@ public class UserServiceImpl implements UserService {
          user.setFirstName(request.getFirstName());
          user.setLastName(request.getLastName());
          user.setUsername(request.getUsername());
-         user.setPassword(request.getPassword());
+         user.setPassword(passwordEncoder.encode(request.getPassword()));
          user.setRole(request.getRole());
          user.setEmail(request.getEmail());
          userRespository.save(user);
          return user.getId();
     }
-
+    public void changePassword(String email, ChangePasswordRequest request){
+        User user = getUserByEmail(email);
+        if(!passwordEncoder.matches(request.getCurrentPassword(),user.getPassword())){
+            throw new RuntimeException("password not  match");
+        }
+        user.setPassword(passwordEncoder.encode(request.getNewPassword()));
+        userRespository.save(user);
+    }
+    private User getUserByEmail(String email){
+        return userRespository.findByEmail(email).orElseThrow(() -> new RuntimeException("Email not found"));
+    }
 
     private User getUserById(long id){
         return userRespository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));

@@ -19,7 +19,7 @@ public class AbstractEntity<T extends Serializable> implements Serializable {
     private T id;
 
     @CreatedDate
-    @Column(name = "create_at",updatable = false)
+    @Column(name = "create_at")
     private LocalDateTime createAt;
 
     @UpdateTimestamp
