@@ -30,7 +30,8 @@ public class User extends AbstractEntity<Long> implements UserDetails, Serializa
     @Enumerated(EnumType.STRING)
     private RoleEnum role;
     @OneToMany(mappedBy = "user")
-
+    private List<Comment> comments = new ArrayList<>();
+    @OneToMany(mappedBy = "user")
     private List<Orders> orders = new ArrayList<>();
     @OneToOne(mappedBy = "user",cascade = CascadeType.ALL)
     private Cart cart;

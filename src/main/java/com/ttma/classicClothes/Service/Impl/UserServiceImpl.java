@@ -6,7 +6,7 @@ import com.ttma.classicClothes.dto.request.UserRequest;
 import com.ttma.classicClothes.dto.response.ResponseUser;
 import com.ttma.classicClothes.enums.RoleEnum;
 import com.ttma.classicClothes.model.User;
-import com.ttma.classicClothes.repository.UserRespository;
+import com.ttma.classicClothes.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -20,7 +20,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
-    private final UserRespository userRespository;
+    private final UserRepository userRespository;
     private final PasswordEncoder passwordEncoder;
 
     @Override
@@ -31,7 +31,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public long createUser(UserRequest request) {
         if(userRespository.findByEmail(request.getEmail()).isPresent()){
-            throw  new RuntimeException("Email already exist");
+            throw new RuntimeException("Email already exist");
+        }
+        if(userRespository.findByUsername(request.getUsername()).isPresent()){
+            throw new RuntimeException("Username already exist");
         }
         User user = User.builder()
                 .firstName(request.getFirstName())
@@ -49,6 +52,7 @@ public class UserServiceImpl implements UserService {
         Pageable pageable = PageRequest.of(pageNo, pageSize);
         Page<User> users =  userRespository.findAll(pageable);
         return users.map(user -> ResponseUser.builder()
+                .id(user.getId())
                 .firstName(user.getFirstName())
                 .lastName(user.getLastName())
                 .username(user.getUsername())
@@ -62,6 +66,7 @@ public class UserServiceImpl implements UserService {
     public ResponseUser getUser(long id) {
         User user = getUserById(id);
         return ResponseUser.builder()
+                .id(user.getId())
                 .firstName(user.getFirstName())
                 .lastName(user.getLastName())
                 .username(user.getUsername())

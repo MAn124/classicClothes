@@ -1,9 +1,8 @@
 package com.ttma.classicClothes;
 
-import com.ttma.classicClothes.Service.UserService;
 import com.ttma.classicClothes.enums.RoleEnum;
 import com.ttma.classicClothes.model.User;
-import com.ttma.classicClothes.repository.UserRespository;
+import com.ttma.classicClothes.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
@@ -14,7 +13,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @Slf4j
 @RequiredArgsConstructor
 public class ClassicClothesApplication implements CommandLineRunner {
-	private  final UserRespository userRespository;
+	private  final UserRepository userRespository;
 	public static void main(String[] args) {
 		SpringApplication.run(ClassicClothesApplication.class, args);
 	}

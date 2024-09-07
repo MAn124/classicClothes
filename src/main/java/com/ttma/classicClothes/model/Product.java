@@ -25,6 +25,8 @@ public class Product extends AbstractEntity<Long> implements Serializable {
     @ManyToOne()
     @JoinColumn(name = "category_id")
     private Category category;
+    @OneToMany(mappedBy = "product")
+    private List<Comment> comments = new ArrayList<>();
 
     @OneToMany(mappedBy = "product")
     private List<OrderItems> orderItems = new ArrayList<>();

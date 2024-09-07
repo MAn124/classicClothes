@@ -8,19 +8,18 @@ import com.ttma.classicClothes.model.Product;
 import com.ttma.classicClothes.model.User;
 import com.ttma.classicClothes.repository.CartRepository;
 import com.ttma.classicClothes.repository.ProductRepository;
-import com.ttma.classicClothes.repository.UserRespository;
+import com.ttma.classicClothes.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Optional;
-import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor
 public class CartServiceImpl implements CartService {
     private final ProductRepository productRepository;
-    private final UserRespository userRespository;
+    private final UserRepository userRespository;
     private final CartRepository cartRepository;
     @Override
     public Cart addToCart(Long userId, Long productId, Integer quantity) {
