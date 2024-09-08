@@ -2,6 +2,7 @@ package com.ttma.classicClothes.Service.Impl;
 
 import com.ttma.classicClothes.Service.ProductService;
 import com.ttma.classicClothes.dto.request.ProductRequest;
+import com.ttma.classicClothes.dto.response.ResponsePage;
 import com.ttma.classicClothes.dto.response.ResponseProduct;
 import com.ttma.classicClothes.model.Category;
 import com.ttma.classicClothes.model.Product;
@@ -29,10 +30,10 @@ public class ProductServiceImpl implements ProductService {
     private static final String UPLOAD_DIR = "src/main/resources/static/images";
 
     @Override
-    public List<ResponseProduct> getAllProduct(int pageNo, int pageSize) {
+    public ResponsePage<?> getAllProduct(int pageNo, int pageSize) {
         Pageable pageable = PageRequest.of(pageNo, pageSize);
         Page<Product> products = productRepository.findAll(pageable);
-        return products.map(product -> ResponseProduct.builder()
+      List<ResponseProduct> productList =  products.map(product -> ResponseProduct.builder()
                 .name(product.getName())
                 .description(product.getDescription())
                 .price(product.getPrice())
@@ -40,6 +41,12 @@ public class ProductServiceImpl implements ProductService {
                 .image(product.getImage())
                 .categoryId(product.getCategory().getId())
                 .build()).toList();
+        return  ResponsePage.builder()
+                .pageNo(pageNo)
+                .pageSize(pageSize)
+                .totalPage(products.getTotalPages())
+                .items(productList)
+                .build();
     }
 
     @Override

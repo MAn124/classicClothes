@@ -1,6 +1,7 @@
 package com.ttma.classicClothes.dto.request;
 
 import com.ttma.classicClothes.model.Category;
+import com.ttma.classicClothes.model.Comment;
 import lombok.*;
 
 import java.math.BigDecimal;
@@ -18,4 +19,5 @@ public class ProductRequest {
     private BigDecimal price;
     private String image;
     private Long categoryId;
+    private List<Comment> comments;
 }

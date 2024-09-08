@@ -2,6 +2,7 @@ package com.ttma.classicClothes.Service.Impl;
 
 import com.ttma.classicClothes.Service.CommentService;
 import com.ttma.classicClothes.dto.request.CommentRequest;
+import com.ttma.classicClothes.dto.response.ResponseComment;
 import com.ttma.classicClothes.model.Comment;
 import com.ttma.classicClothes.model.Product;
 import com.ttma.classicClothes.model.User;
@@ -34,8 +35,13 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public List<CommentRequest> getCommentByProductId(long id) {
-        
-        return null;
+    public List<ResponseComment> getCommentByProductId(long id) {
+        List<Comment> comments = commentRepository.findByProductId(id);
+        return comments.stream().map(comment -> ResponseComment.builder()
+                .id(comment.getId())
+                .userId(comment.getUser().getId())
+                .score(comment.getScore())
+                .content(comment.getContent())
+                .build()).toList();
     }
 }

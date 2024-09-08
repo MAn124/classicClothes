@@ -3,6 +3,7 @@ package com.ttma.classicClothes.Service.Impl;
 import com.ttma.classicClothes.Service.UserService;
 import com.ttma.classicClothes.dto.request.ChangePasswordRequest;
 import com.ttma.classicClothes.dto.request.UserRequest;
+import com.ttma.classicClothes.dto.response.ResponsePage;
 import com.ttma.classicClothes.dto.response.ResponseUser;
 import com.ttma.classicClothes.enums.RoleEnum;
 import com.ttma.classicClothes.model.User;
@@ -48,10 +49,13 @@ public class UserServiceImpl implements UserService {
         return user.getId();
     }
     @Override
-    public List<ResponseUser> getAllUser(int pageNo, int pageSize) {
+    public ResponsePage<?> getAllUser(int pageNo, int pageSize) {
+        if(pageNo > 0){
+            pageNo = pageNo - 1;
+        }
         Pageable pageable = PageRequest.of(pageNo, pageSize);
         Page<User> users =  userRespository.findAll(pageable);
-        return users.map(user -> ResponseUser.builder()
+       List<ResponseUser> userList = users.map(user -> ResponseUser.builder()
                 .id(user.getId())
                 .firstName(user.getFirstName())
                 .lastName(user.getLastName())
@@ -60,6 +64,12 @@ public class UserServiceImpl implements UserService {
                 .role(user.getRole())
                 .email(user.getEmail())
                 .build()).toList();
+         return ResponsePage.builder()
+                 .pageNo(pageNo)
+                 .pageSize(pageSize)
+                 .totalPage(users.getTotalPages())
+                 .items(userList)
+                 .build();
     }
 
     @Override
