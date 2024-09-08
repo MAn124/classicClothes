@@ -2,6 +2,7 @@ package com.ttma.classicClothes.Service.Impl;
 
 import com.ttma.classicClothes.Service.CartService;
 import com.ttma.classicClothes.dto.request.CartRequest;
+import com.ttma.classicClothes.dto.response.ResponseCart;
 import com.ttma.classicClothes.model.Cart;
 import com.ttma.classicClothes.model.CartItems;
 import com.ttma.classicClothes.model.Product;
@@ -46,9 +47,13 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public CartRequest getCart(Long userId) {
-        Cart cart = cartRepository.findByUserId(userId).orElseThrow(() -> new RuntimeException("User not found"));
-        return null;
+    public ResponseCart getCart(Long userId) {
+        Cart cart = getByUserId(userId);
+        return ResponseCart.builder()
+                .id(cart.getId())
+                .userId(cart.getUser().getId())
+                .cartItems(cart.getCartItems())
+                .build();
     }
 
     @Override
@@ -56,5 +61,8 @@ public class CartServiceImpl implements CartService {
         Cart cart = cartRepository.findByUserId(userId).orElseThrow(() -> new RuntimeException("User not found"));
         cart.getCartItems().clear();
         cartRepository.save(cart);
+    }
+    private Cart getByUserId(long id){
+        return cartRepository.findByUserId(id).orElseThrow(() -> new RuntimeException("User not found"));
     }
 }

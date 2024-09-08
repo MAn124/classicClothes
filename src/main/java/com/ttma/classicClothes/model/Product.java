@@ -18,7 +18,7 @@ import java.util.List;
 public class Product extends AbstractEntity<Long> implements Serializable {
     private String name;
     private String description;
-    private int quantity;
+    private Integer quantity;
     private BigDecimal price;
     private String image;
 

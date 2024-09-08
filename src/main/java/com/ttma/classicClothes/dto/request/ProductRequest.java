@@ -15,7 +15,7 @@ import java.util.List;
 public class ProductRequest {
     private String name;
     private String description;
-    private int quantity;
+    private Integer quantity;
     private BigDecimal price;
     private String image;
     private Long categoryId;
