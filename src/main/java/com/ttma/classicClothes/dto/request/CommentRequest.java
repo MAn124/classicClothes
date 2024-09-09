@@ -10,5 +10,5 @@ import lombok.*;
 public class CommentRequest {
     private String content;
     private Integer Score;
-    private Long userId;
+
 }

@@ -4,7 +4,6 @@ import com.ttma.classicClothes.Service.ProductService;
 import com.ttma.classicClothes.dto.request.ProductRequest;
 import com.ttma.classicClothes.dto.response.ResponsePage;
 import com.ttma.classicClothes.dto.response.ResponseProduct;
-import com.ttma.classicClothes.model.Category;
 import com.ttma.classicClothes.model.Product;
 import com.ttma.classicClothes.repository.CategoryRepository;
 import com.ttma.classicClothes.repository.ProductRepository;
@@ -112,7 +111,7 @@ public class ProductServiceImpl implements ProductService {
 
 
     private String saveImage(MultipartFile image) throws IOException {
-        String fileName = UUID.randomUUID().toString()+"_" + image.getOriginalFilename();
+        String fileName = UUID.randomUUID() +"_" + image.getOriginalFilename();
         Path path = Paths.get(UPLOAD_DIR + fileName);
         Files.createDirectories(path.getParent());
         Files.write(path, image.getBytes());

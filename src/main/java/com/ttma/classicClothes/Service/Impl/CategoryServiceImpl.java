@@ -47,4 +47,31 @@ public class CategoryServiceImpl implements CategoryService {
                 .items(categoryList)
                 .build();
     }
+
+    @Override
+    public long updateCate(long id, CategoryRequest request) {
+        Category category = getCate(id);
+        category.setName(request.getName());
+        category.setDescription(request.getDescription());
+        categoryRepository.save(category);
+        return category.getId();
+    }
+
+    @Override
+    public ResponseCategory getCateById(long id) {
+        Category category  = getCate(id);
+        return ResponseCategory.builder()
+                .id(category.getId())
+                .name(category.getName())
+                .description(category.getDescription())
+                .build();
+    }
+
+    @Override
+    public void deleteCate(long id) {
+        categoryRepository.deleteById(id);
+    }
+    private Category getCate(long id){
+        return categoryRepository.findById(id).orElseThrow(() -> new RuntimeException("Category not found"));
+    }
 }

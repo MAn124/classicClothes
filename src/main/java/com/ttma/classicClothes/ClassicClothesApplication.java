@@ -12,11 +12,17 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 @Slf4j
 @RequiredArgsConstructor
-public class ClassicClothesApplication {
+public class ClassicClothesApplication implements CommandLineRunner{
 	private  final UserRepository userRespository;
 	public static void main(String[] args) {
 		SpringApplication.run(ClassicClothesApplication.class, args);
 	}
 
 
+	@Override
+	public void run(String... args) throws Exception {
+//		User user = new User("minh","an","admin@gmail.com","minhan","$2a$12$eln8KLoNcnjK8F5RpBFlduzSfu0qokNEa1bFQgI4a5LziqqX7YHHm",RoleEnum.ADMIN,null,null,null);
+//		userRespository.save(user);
+		log.warn("Ok");
+	}
 }

@@ -9,6 +9,7 @@ import com.ttma.classicClothes.enums.RoleEnum;
 import com.ttma.classicClothes.model.User;
 import com.ttma.classicClothes.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -118,4 +119,6 @@ public class UserServiceImpl implements UserService {
     private User getUserById(long id){
         return userRespository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
     }
+
+
 }

@@ -1,10 +1,12 @@
 package com.ttma.classicClothes.dto.response;
 
 import com.ttma.classicClothes.model.Category;
+import com.ttma.classicClothes.model.Comment;
 import lombok.Builder;
 import lombok.Getter;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Getter
 @Builder

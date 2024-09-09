@@ -22,12 +22,37 @@ public class CategoryController {
             return new ResponseError(HttpStatus.BAD_REQUEST.value(), "Failed");
         }
     }
-
     @GetMapping("/")
     public ResponseData<?> getAllCate(@RequestParam(defaultValue = "0", required = false) int pageNo,
                                       @RequestParam(defaultValue = "20", required = false) int pageSize){
         try {
             return new ResponseData<>(HttpStatus.OK.value(), "success",categoryService.getAllCate(pageNo, pageSize));
+        } catch (Exception e){
+            return new ResponseError(HttpStatus.BAD_REQUEST.value(), "Failed");
+        }
+    }
+    @PutMapping("/update/{id}")
+    public ResponseData<?> updateCate(@PathVariable("id") long id,
+            @RequestBody CategoryRequest request){
+        try {
+            return new ResponseData<>(HttpStatus.OK.value(), "success",categoryService.updateCate(id,request));
+        } catch (Exception e){
+            return new ResponseError(HttpStatus.BAD_REQUEST.value(), "Failed");
+        }
+    }
+    @GetMapping("/{id}")
+    public ResponseData<?> getCateById(@PathVariable("id") long id){
+        try {
+            return new ResponseData<>(HttpStatus.OK.value(), "success",categoryService.getCateById(id));
+        } catch (Exception e){
+            return new ResponseError(HttpStatus.BAD_REQUEST.value(), "Failed");
+        }
+    }
+    @DeleteMapping("/{id}")
+    public ResponseData<?> deleteCate(@PathVariable("id") long id){
+        try {
+            categoryService.deleteCate(id);
+            return new ResponseData<>(HttpStatus.OK.value(), "success");
         } catch (Exception e){
             return new ResponseError(HttpStatus.BAD_REQUEST.value(), "Failed");
         }
