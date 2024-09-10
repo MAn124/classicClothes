@@ -24,6 +24,7 @@ public class JwtServiceImpl implements JwtService {
     public String generateToken(UserDetails user) {
         return createToken(new HashMap<>(),user);
     }
+
     public String generateRefreshToken(UserDetails user) {
         return createRefreshToken(new HashMap<>(),user);
     }

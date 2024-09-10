@@ -19,5 +19,4 @@ public class ProductRequest {
     private BigDecimal price;
     private String image;
     private Long categoryId;
-    private List<Comment> comments;
 }

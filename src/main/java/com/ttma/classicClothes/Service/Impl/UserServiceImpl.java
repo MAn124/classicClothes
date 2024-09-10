@@ -1,5 +1,6 @@
 package com.ttma.classicClothes.Service.Impl;
 
+import com.ttma.classicClothes.Service.EmailService;
 import com.ttma.classicClothes.Service.UserService;
 import com.ttma.classicClothes.dto.request.ChangePasswordRequest;
 import com.ttma.classicClothes.dto.request.UserRequest;
@@ -18,12 +19,14 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Random;
 
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
     private final UserRepository userRespository;
     private final PasswordEncoder passwordEncoder;
+    private final EmailService emailService;
 
     @Override
     public UserDetailsService userDetailsService() {
@@ -44,8 +47,11 @@ public class UserServiceImpl implements UserService {
                 .username(request.getUsername())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .role(RoleEnum.USER)
+                .confirmCode(generateConfirmCode())
+                .emailConfirmation(false)
                 .email(request.getEmail())
                 .build();
+        emailService.sendConfirmCode(user);
         userRespository.save(user);
         return user.getId();
     }
@@ -111,6 +117,23 @@ public class UserServiceImpl implements UserService {
         }
         user.setPassword(passwordEncoder.encode(request.getNewPassword()));
         userRespository.save(user);
+    }
+
+    @Override
+    public void confirmEmail(String email, String confirmCode) {
+        User user = getUserByEmail(email);
+        if(user.getConfirmCode().equals(confirmCode)){
+            user.setEmailConfirmation(true);
+            user.setConfirmCode(null);
+            userRespository.save(user);
+        } else {
+            throw new RuntimeException("Invalid");
+        }
+    }
+    private String generateConfirmCode(){
+        Random random= new Random();
+        int code = 100000 + random.nextInt(900000);
+        return String.valueOf(code);
     }
     private User getUserByEmail(String email){
         return userRespository.findByEmail(email).orElseThrow(() -> new RuntimeException("Email not found"));

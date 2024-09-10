@@ -9,10 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 @RestController
 @RequestMapping("/api/cart")
 @RequiredArgsConstructor
@@ -26,6 +24,16 @@ public class CartController {
         try{
             Long userId = ((User) userDetails).getId();
             return new ResponseData<>(HttpStatus.CREATED.value(),"success",cartService.addToCart(userId,productId,quantity));
+        }catch (Exception e){
+            return new ResponseError(HttpStatus.BAD_REQUEST.value(), "Failed");
+        }
+    };
+    @GetMapping("/{id}")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseData<?> getCart(@AuthenticationPrincipal UserDetails userDetails){
+        try{
+            Long userId = ((User) userDetails).getId();
+            return new ResponseData<>(HttpStatus.OK.value(),"success",cartService.getCart(userId));
         }catch (Exception e){
             return new ResponseError(HttpStatus.BAD_REQUEST.value(), "Failed");
         }

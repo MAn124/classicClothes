@@ -1,7 +1,6 @@
 package com.ttma.classicClothes.Service.Impl;
 
 import com.ttma.classicClothes.Service.CartService;
-import com.ttma.classicClothes.dto.request.CartRequest;
 import com.ttma.classicClothes.dto.response.ResponseCart;
 import com.ttma.classicClothes.model.Cart;
 import com.ttma.classicClothes.model.CartItems;
@@ -20,12 +19,12 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class CartServiceImpl implements CartService {
     private final ProductRepository productRepository;
-    private final UserRepository userRespository;
+    private final UserRepository userRepository;
     private final CartRepository cartRepository;
     @Override
-    public Cart addToCart(Long userId, Long productId, Integer quantity) {
+    public long addToCart(Long userId, Long productId, Integer quantity) {
         //kiem tra nguoi dung
-        User user = userRespository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
+        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
         //kiem tra san pham
         Product product = productRepository.findById(productId).orElseThrow(() -> new RuntimeException("Product not found"));
         //kiem tra soluong san pham
@@ -43,7 +42,8 @@ public class CartServiceImpl implements CartService {
             CartItems cartItems = new CartItems(null, cart, product, quantity);
             cart.getCartItems().add(cartItems);
         }
-        return cartRepository.save(cart);
+        cartRepository.save(cart);
+        return cart.getId();
     }
 
     @Override

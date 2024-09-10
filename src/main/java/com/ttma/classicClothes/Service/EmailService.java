@@ -1,6 +1,7 @@
 package com.ttma.classicClothes.Service;
 
 import com.ttma.classicClothes.model.Orders;
+import com.ttma.classicClothes.model.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
@@ -21,5 +22,14 @@ public class EmailService {
        mailMessage.setSubject("Order confirmation");
        mailMessage.setText("Your order has been confirmed" + order.getId());
        mailSender.send(mailMessage);
+   }
+   public void sendConfirmCode(User user){
+       SimpleMailMessage mailMessage = new SimpleMailMessage();
+       mailMessage.setFrom(fromEmail);
+       mailMessage.setTo(user.getEmail());
+       mailMessage.setSubject("Confirm email");
+       mailMessage.setText("Your email has been confirmed" + user.getConfirmCode());
+       mailSender.send(mailMessage);
+
    }
 }

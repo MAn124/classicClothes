@@ -25,7 +25,10 @@ public class User extends AbstractEntity<Long> implements UserDetails, Serializa
     private String firstName;
     private String lastName;
     private String email;
+    @Column(name = "username", unique = true)
     private String username;
+    private boolean emailConfirmation;
+    private String confirmCode;
     private String password;
     @Enumerated(EnumType.STRING)
     private RoleEnum role;
@@ -59,6 +62,5 @@ public class User extends AbstractEntity<Long> implements UserDetails, Serializa
     public boolean isEnabled() {
         return true;
     }
-
 
 }

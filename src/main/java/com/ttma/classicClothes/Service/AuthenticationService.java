@@ -19,10 +19,10 @@ public class AuthenticationService {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(),request.getPassword()));
         var user = userRepository.findByUsername(request.getUsername()).orElseThrow(() -> new RuntimeException("User not found"));
         String accessToken = jwtService.generateToken(user);
-
+        String freshToken = jwtService.generateRefreshToken(user);
         return ResponseToken.builder()
                 .accessToken(accessToken)
-                .refreshToken("refreshToken")
+                .refreshToken(freshToken)
                 .id(user.getId())
                 .build();
     }

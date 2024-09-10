@@ -1,5 +1,6 @@
 package com.ttma.classicClothes.dto.response;
 
+import com.ttma.classicClothes.dto.request.CartItemsRequest;
 import com.ttma.classicClothes.model.CartItems;
 import lombok.Builder;
 import lombok.Getter;
@@ -11,5 +12,5 @@ import java.util.List;
 public class ResponseCart {
     private Long id;
     private Long userId;
-    private List<CartItems>cartItems;
+    private List<ResponseCartItem> cartItems;
 }
