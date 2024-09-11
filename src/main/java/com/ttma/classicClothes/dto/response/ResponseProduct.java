@@ -17,4 +17,5 @@ public class ResponseProduct {
     private BigDecimal price;
     private String image;
     private Long categoryId;
+
 }

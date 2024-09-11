@@ -52,7 +52,6 @@ public class CartServiceImpl implements CartService {
         return ResponseCart.builder()
                 .id(cart.getId())
                 .userId(cart.getUser().getId())
-                .cartItems(cart.getCartItems())
                 .build();
     }
 

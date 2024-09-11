@@ -69,6 +69,8 @@ public class UserServiceImpl implements UserService {
                 .username(user.getUsername())
                 .password(user.getPassword())
                 .role(user.getRole())
+                .emailConfirmation(user.isEmailConfirmation())
+                .confirmCode(user.getConfirmCode())
                 .email(user.getEmail())
                 .build()).toList();
          return ResponsePage.builder()

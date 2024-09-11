@@ -21,14 +21,19 @@ import java.util.List;
 @Entity
 @Table(name = "user")
 public class User extends AbstractEntity<Long> implements UserDetails, Serializable {
-
+    @Column(name = "first_name")
     private String firstName;
+    @Column(name = "last_name")
     private String lastName;
+    @Column(name = "email")
     private String email;
     @Column(name = "username", unique = true)
     private String username;
+    @Column(name = "email_confirmation")
     private boolean emailConfirmation;
+    @Column(name = "confirm_code")
     private String confirmCode;
+    @Column(name = "password")
     private String password;
     @Enumerated(EnumType.STRING)
     private RoleEnum role;

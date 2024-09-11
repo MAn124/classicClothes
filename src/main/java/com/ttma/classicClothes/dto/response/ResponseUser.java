@@ -14,5 +14,6 @@ public class ResponseUser {
     private String username;
     private String password;
     private RoleEnum role;
-
+    private boolean emailConfirmation;
+    private String confirmCode;
 }
