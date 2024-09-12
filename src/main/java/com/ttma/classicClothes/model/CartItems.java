@@ -22,4 +22,10 @@ public class CartItems  implements Serializable {
     @JoinColumn(name = "product_id", nullable = false)
     private Product product;
     private int quantity;
+
+    public CartItems(Long id, Product product, int quantity) {
+        this.id = id;
+        this.product = product;
+        this.quantity = quantity;
+    }
 }

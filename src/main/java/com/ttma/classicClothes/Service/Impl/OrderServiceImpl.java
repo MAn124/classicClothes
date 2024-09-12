@@ -2,6 +2,7 @@ package com.ttma.classicClothes.Service.Impl;
 
 import com.ttma.classicClothes.Service.EmailService;
 import com.ttma.classicClothes.Service.OrderService;
+import com.ttma.classicClothes.dto.response.ResponseOrder;
 import com.ttma.classicClothes.enums.OrderStatus;
 import com.ttma.classicClothes.model.*;
 import com.ttma.classicClothes.repository.CartRepository;
@@ -11,6 +12,9 @@ import com.ttma.classicClothes.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.query.Order;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -36,6 +40,7 @@ public class OrderServiceImpl implements OrderService {
         orders.setUser(user);
         orders.setAddress(address);
         orders.setPhoneNumber(number);
+        orders.setStatus(OrderStatus.PREPARING);
         List<OrderItems> orderItems = createOrderItems(cart,orders);
         orders.setOrderItems(orderItems);
         Orders saveOrder = orderRepository.save(orders);
@@ -61,8 +66,16 @@ public class OrderServiceImpl implements OrderService {
             return new OrderItems(cartItems.getQuantity(), product.getPrice(), orders, product);
         } ).toList();
     }
-    public List<Orders> getAllOrder(){
-        return orderRepository.findAll();
+    public List<ResponseOrder> getAllOrder(int pageNo, int pageSize){
+        Pageable  pageable = PageRequest.of(pageNo, pageSize);
+        Page<Orders> orders = orderRepository.findAll(pageable);
+        return  orders.map(orders1 -> ResponseOrder.builder()
+                .id(orders1.getId())
+                .userId(orders1.getUser().getId())
+                .phoneNumber(orders1.getPhoneNumber())
+                .address(orders1.getAddress())
+                .status(orders1.getStatus())
+                .build()).toList();
     }
     public List<Orders> getUserOrders(long userId){
         return orderRepository.findByUserId(userId);

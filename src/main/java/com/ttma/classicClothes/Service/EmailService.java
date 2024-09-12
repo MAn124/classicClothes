@@ -20,7 +20,7 @@ public class EmailService {
        mailMessage.setFrom(fromEmail);
        mailMessage.setTo(order.getUser().getEmail());
        mailMessage.setSubject("Order confirmation");
-       mailMessage.setText("Your order has been confirmed" + order.getId());
+       mailMessage.setText("Your order has been confirmed: " + order.getId());
        mailSender.send(mailMessage);
    }
    public void sendConfirmCode(User user){
@@ -28,7 +28,7 @@ public class EmailService {
        mailMessage.setFrom(fromEmail);
        mailMessage.setTo(user.getEmail());
        mailMessage.setSubject("Confirm email");
-       mailMessage.setText("Your email has been confirmed" + user.getConfirmCode());
+       mailMessage.setText("Your email code: " + user.getConfirmCode());
        mailSender.send(mailMessage);
 
    }

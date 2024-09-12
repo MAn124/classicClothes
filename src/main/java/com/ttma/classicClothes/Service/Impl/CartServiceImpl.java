@@ -2,6 +2,7 @@ package com.ttma.classicClothes.Service.Impl;
 
 import com.ttma.classicClothes.Service.CartService;
 import com.ttma.classicClothes.dto.response.ResponseCart;
+import com.ttma.classicClothes.dto.response.ResponseCartItem;
 import com.ttma.classicClothes.model.Cart;
 import com.ttma.classicClothes.model.CartItems;
 import com.ttma.classicClothes.model.Product;
@@ -52,6 +53,14 @@ public class CartServiceImpl implements CartService {
         return ResponseCart.builder()
                 .id(cart.getId())
                 .userId(cart.getUser().getId())
+                .cartItems(cart.getCartItems().stream().map(cartItems -> {
+                    return ResponseCartItem.builder()
+                            .id(cartItems.getId())
+                            .productId(cartItems.getProduct().getId())
+                            .quantity(cartItems.getQuantity())
+                            .build();
+
+                }).toList())
                 .build();
     }
 

@@ -3,11 +3,13 @@ package com.ttma.classicClothes.model;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Setter
 @Getter
@@ -18,11 +20,11 @@ public class AbstractEntity<T extends Serializable> implements Serializable {
     @Column(name = "id")
     private T id;
 
-    @CreatedDate
+    @CreationTimestamp
     @Column(name = "create_at")
-    private LocalDateTime createAt;
+    private Date createAt;
 
     @UpdateTimestamp
     @Column(name = "update_at")
-    private LocalDateTime updateAt;
+    private Date updateAt;
 }

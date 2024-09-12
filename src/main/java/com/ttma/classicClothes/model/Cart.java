@@ -23,4 +23,6 @@ public class Cart  implements Serializable {
     private User user;
     @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL)
     private List<CartItems> cartItems = new ArrayList<>();
+
+
 }
