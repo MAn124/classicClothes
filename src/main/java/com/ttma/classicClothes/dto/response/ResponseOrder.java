@@ -15,5 +15,5 @@ public class ResponseOrder {
     private String address;
     private String phoneNumber;
     private OrderStatus status;
-    private List<OrderItems> orderItems;
+    private List<ResponseOrderItem> orderItems;
 }

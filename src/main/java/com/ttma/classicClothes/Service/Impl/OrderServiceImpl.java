@@ -3,6 +3,7 @@ package com.ttma.classicClothes.Service.Impl;
 import com.ttma.classicClothes.Service.EmailService;
 import com.ttma.classicClothes.Service.OrderService;
 import com.ttma.classicClothes.dto.response.ResponseOrder;
+import com.ttma.classicClothes.dto.response.ResponseOrderItem;
 import com.ttma.classicClothes.enums.OrderStatus;
 import com.ttma.classicClothes.model.*;
 import com.ttma.classicClothes.repository.CartRepository;
@@ -75,6 +76,14 @@ public class OrderServiceImpl implements OrderService {
                 .phoneNumber(orders1.getPhoneNumber())
                 .address(orders1.getAddress())
                 .status(orders1.getStatus())
+                .orderItems(orders1.getOrderItems().stream().map(orderItems -> {
+                    return ResponseOrderItem.builder()
+                            .id(orderItems.getId())
+                            .productId(orderItems.getProduct().getId())
+                            .quantity(orderItems.getQuantity())
+                            .price(orderItems.getPrice())
+                            .build();
+                }).toList())
                 .build()).toList();
     }
     public List<Orders> getUserOrders(long userId){

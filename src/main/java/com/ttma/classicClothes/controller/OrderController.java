@@ -3,6 +3,7 @@ package com.ttma.classicClothes.controller;
 import com.ttma.classicClothes.Service.OrderService;
 import com.ttma.classicClothes.dto.response.ResponseData;
 import com.ttma.classicClothes.dto.response.ResponseError;
+import com.ttma.classicClothes.enums.OrderStatus;
 import com.ttma.classicClothes.model.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -37,6 +38,16 @@ public class OrderController {
                                         @RequestParam(defaultValue = "20", required = false) int pageSize){
         try{
             return new ResponseData<>(HttpStatus.OK.value(), "success",orderService.getAllOrder(pageNo,pageSize));
+        } catch (Exception e){
+            log.error("error message : {}",e.getMessage(),e.getCause());
+            return new ResponseError(HttpStatus.BAD_REQUEST.value(), "Failed");
+        }
+    }
+    @PutMapping("/{id}/status")
+    public ResponseData<?> updateOrder(@PathVariable("id")long id,
+                                       @RequestParam OrderStatus status){
+        try{
+            return new ResponseData<>(HttpStatus.OK.value(), "success",orderService.updateOrder(id, status));
         } catch (Exception e){
             log.error("error message : {}",e.getMessage(),e.getCause());
             return new ResponseError(HttpStatus.BAD_REQUEST.value(), "Failed");

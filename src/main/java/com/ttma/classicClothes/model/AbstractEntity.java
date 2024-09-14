@@ -1,5 +1,6 @@
 package com.ttma.classicClothes.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,10 +22,12 @@ public class AbstractEntity<T extends Serializable> implements Serializable {
     private T id;
 
     @CreationTimestamp
+    @JsonFormat(pattern = "dd/MM/yyyy, hh/mm/ss")
     @Column(name = "create_at")
     private Date createAt;
 
     @UpdateTimestamp
+    @JsonFormat(pattern = "dd/MM/yyyy, hh/mm/ss")
     @Column(name = "update_at")
     private Date updateAt;
 }
