@@ -4,6 +4,7 @@ import com.ttma.classicClothes.Service.UserService;
 import com.ttma.classicClothes.dto.request.UserRequest;
 import com.ttma.classicClothes.dto.response.ResponseData;
 import com.ttma.classicClothes.dto.response.ResponseError;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/user")
 public class UserController {
     private final UserService userService;
+    @Operation(summary = "Create user ", description = "Create new user")
     @PostMapping("/create")
     public ResponseData<?> createUser(@RequestBody UserRequest request){
         try {
