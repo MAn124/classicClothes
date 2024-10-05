@@ -5,6 +5,7 @@ import com.ttma.classicClothes.dto.request.CategoryRequest;
 import com.ttma.classicClothes.dto.response.ResponseData;
 import com.ttma.classicClothes.dto.response.ResponseError;
 import com.ttma.classicClothes.model.Category;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class CategoryController {
     private final CategoryService categoryService;
+    @Operation(summary = "Create new category ", description = "create new category")
     @PostMapping("/create")
     public ResponseData<?> createCate(@RequestBody CategoryRequest request){
         try {
@@ -22,6 +24,7 @@ public class CategoryController {
             return new ResponseError(HttpStatus.BAD_REQUEST.value(), "Failed");
         }
     }
+    @Operation(summary = "Get all category ", description = "Get all category")
     @GetMapping("/")
     public ResponseData<?> getAllCate(@RequestParam(defaultValue = "0", required = false) int pageNo,
                                       @RequestParam(defaultValue = "20", required = false) int pageSize){
@@ -31,6 +34,7 @@ public class CategoryController {
             return new ResponseError(HttpStatus.BAD_REQUEST.value(), "Failed");
         }
     }
+    @Operation(summary = "Update category ", description = "Update category")
     @PutMapping("/update/{id}")
     public ResponseData<?> updateCate(@PathVariable("id") long id,
             @RequestBody CategoryRequest request){
@@ -40,6 +44,7 @@ public class CategoryController {
             return new ResponseError(HttpStatus.BAD_REQUEST.value(), "Failed");
         }
     }
+    @Operation(summary = "Get category by id", description = "Get category by id")
     @GetMapping("/{id}")
     public ResponseData<?> getCateById(@PathVariable("id") long id){
         try {
@@ -48,6 +53,7 @@ public class CategoryController {
             return new ResponseError(HttpStatus.BAD_REQUEST.value(), "Failed");
         }
     }
+    @Operation(summary = "Delete order ", description = "Delete order")
     @DeleteMapping("/{id}")
     public ResponseData<?> deleteCate(@PathVariable("id") long id){
         try {

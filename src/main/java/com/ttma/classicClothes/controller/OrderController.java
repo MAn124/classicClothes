@@ -5,6 +5,7 @@ import com.ttma.classicClothes.dto.response.ResponseData;
 import com.ttma.classicClothes.dto.response.ResponseError;
 import com.ttma.classicClothes.enums.OrderStatus;
 import com.ttma.classicClothes.model.User;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class OrderController {
     private final OrderService orderService;
+    @Operation(summary = "Create new order ", description = "Create new order with authorize")
     @PostMapping("/")
     @PreAuthorize("isAuthenticated()")
     public ResponseData<?> createOrder(@AuthenticationPrincipal UserDetails userDetails,
@@ -33,6 +35,7 @@ public class OrderController {
         }
 
     }
+    @Operation(summary = "Get all order ", description = "Get all order")
     @GetMapping("/")
     public ResponseData<?> getAllOrders(@RequestParam(defaultValue = "0", required = false) int pageNo,
                                         @RequestParam(defaultValue = "20", required = false) int pageSize){
@@ -43,6 +46,7 @@ public class OrderController {
             return new ResponseError(HttpStatus.BAD_REQUEST.value(), "Failed");
         }
     }
+    @Operation(summary = "Update order status ", description = "Update order status")
     @PutMapping("/{id}/status")
     public ResponseData<?> updateOrder(@PathVariable("id")long id,
                                        @RequestParam OrderStatus status){

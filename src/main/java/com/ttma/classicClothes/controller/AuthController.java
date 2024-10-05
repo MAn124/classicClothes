@@ -6,6 +6,7 @@ import com.ttma.classicClothes.Service.UserService;
 import com.ttma.classicClothes.dto.request.EmailConfirmRequest;
 import com.ttma.classicClothes.dto.request.LoginRequest;
 import com.ttma.classicClothes.dto.response.ResponseToken;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
     private final AuthenticationService authenticationService;
     private final UserService userService;
+    @Operation(summary = "Login", description = "Login")
     @PostMapping("/login")
     public ResponseEntity<ResponseToken> login(@RequestBody LoginRequest request){
         try {
@@ -32,6 +34,7 @@ public class AuthController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
+    @Operation(summary = "Confirm email", description = "Confirm email")
     @PostMapping("/confirm-email")
     public ResponseEntity<?> confirmEmail(@RequestBody EmailConfirmRequest request){
         try {

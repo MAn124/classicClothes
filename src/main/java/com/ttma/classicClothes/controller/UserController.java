@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/user")
 public class UserController {
     private final UserService userService;
-    @Operation(summary = "Create user ", description = "Create new user")
+    @Operation(summary = "Create new user ", description = "Create new user")
     @PostMapping("/create")
     public ResponseData<?> createUser(@RequestBody UserRequest request){
         try {
@@ -24,6 +24,7 @@ public class UserController {
             return new ResponseError(HttpStatus.BAD_REQUEST.value(),"Failed");
         }
     }
+    @Operation(summary = "Get all user ", description = "Get all user with pageNo and pageSize")
     @GetMapping("/")
     public ResponseData<?> getAllUSer(@RequestParam(defaultValue = "0", required = false) int pageNo,
                                       @RequestParam(defaultValue = "20", required = false) int pageSize){
@@ -33,6 +34,7 @@ public class UserController {
             return new ResponseError(HttpStatus.BAD_REQUEST.value(), "Failed");
         }
     }
+    @Operation(summary = "Find user by id", description = "Get user by id")
     @GetMapping("/{id}")
     public ResponseData<?> getUserById(@PathVariable("id") long id){
         try {
@@ -41,6 +43,7 @@ public class UserController {
             return new ResponseError(HttpStatus.NO_CONTENT.value(), "Failed");
         }
     }
+    @Operation(summary = "Update user by id ", description = "Update user by find id ")
     @PutMapping("update/{id}")
     public ResponseData<?> updateUser(@PathVariable("id") long id,
                                       @RequestBody UserRequest request){
@@ -50,6 +53,7 @@ public class UserController {
             return new ResponseError(HttpStatus.NO_CONTENT.value(), "Failed");
         }
     }
+    @Operation(summary = "Delete user ", description = "Delete user by id")
     @DeleteMapping("/{id}")
     public ResponseData<?> deleteUser(@PathVariable("id") long id){
         try {
