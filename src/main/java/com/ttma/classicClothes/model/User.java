@@ -65,7 +65,7 @@ public class User extends AbstractEntity<Long> implements UserDetails, Serializa
 
     @Override
     public boolean isEnabled() {
-        return emailConfirmation;
+        return true;
     }
 
 }
